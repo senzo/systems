@@ -1,0 +1,35 @@
+<h1>Listing systems</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Form</th>
+    <th>X</th>
+    <th>Y</th>
+    <th>Length</th>
+    <th>Width</th>
+    <th>Color</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @systems.each do |system| %>
+  <tr>
+    <td><%= system.name %></td>
+    <td><%= system.form %></td>
+    <td><%= system.x %></td>
+    <td><%= system.y %></td>
+    <td><%= system.length %></td>
+    <td><%= system.width %></td>
+    <td><%= system.color %></td>
+    <td><%= link_to 'Show', system %></td>
+    <td><%= link_to 'Edit', edit_system_path(system) %></td>
+    <td><%= link_to 'Destroy', system, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New System', new_system_path %>

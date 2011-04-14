@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Linker:</b>
+  <%= @link.linker %>
+</p>
+
+<p>
+  <b>Predicate:</b>
+  <%= @link.predicate %>
+</p>
+
+<p>
+  <b>Linked:</b>
+  <%= @link.linked %>
+</p>
+
+
+<%= link_to 'Edit', edit_link_path(@link) %> |
+<%= link_to 'Back', links_path %>

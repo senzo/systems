@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @system.name %>
+</p>
+
+<p>
+  <b>Form:</b>
+  <%= @system.form %>
+</p>
+
+<p>
+  <b>X:</b>
+  <%= @system.x %>
+</p>
+
+<p>
+  <b>Y:</b>
+  <%= @system.y %>
+</p>
+
+<p>
+  <b>Length:</b>
+  <%= @system.length %>
+</p>
+
+<p>
+  <b>Width:</b>
+  <%= @system.width %>
+</p>
+
+<p>
+  <b>Color:</b>
+  <%= @system.color %>
+</p>
+
+
+<%= link_to 'Edit', edit_system_path(@system) %> |
+<%= link_to 'Back', systems_path %>

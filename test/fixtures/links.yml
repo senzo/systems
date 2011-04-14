@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  linker: MyString
+  predicate: MyString
+  linked: MyString
+
+two:
+  linker: MyString
+  predicate: MyString
+  linked: MyString
