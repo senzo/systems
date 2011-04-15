@@ -1,6 +1,4 @@
 SYSTEMS::Application.routes.draw do
-  resources :views
-
   resources :links
 
   resources :systems

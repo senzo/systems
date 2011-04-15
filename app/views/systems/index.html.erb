@@ -33,3 +33,119 @@
 <br />
 
 <%= link_to 'New System', new_system_path %>
+
+
+<script type="text/javascript">
+
+window.onload = function () {
+
+  var dragger = function () {
+    this.ox = this.type == "rect" ? this.attr("x") : this.attr("cx");
+    this.oy = this.type == "rect" ? this.attr("y") : this.attr("cy");
+    oxs = [];
+    oys = [];
+    for(i = 0; i < shapes.length; i++) {
+      oxs.push(texte[i].attr('x'));
+      oys.push(texte[i].attr('y'));
+    }
+  },
+
+      move = function (dx, dy) {
+        var att = this.type == "rect" ? { x: this.ox + dx, y: this.oy + dy } : { cx: this.ox + dx, cy: this.oy + dy };
+        this.attr(att);
+        for(i = 0; i < shapes.length; i++ ) {
+          if(i == (this.attr("id") - 1)) {
+            texte[i].attr({ x: oxs[i] + dx, y: oys[i] + dy });
+          }
+        }
+        for (var i = connections.length; i--; ) { r.connection(connections[i]) }
+      },
+
+      up = function () {
+        if (this.type == "rect") {
+          new Ajax.Request('/systems/' + this.attr("id"),
+                           { method: 'put', 
+                             parameters: { 'system[x]': this.attr("x"),
+                                           'system[y]': this.attr("y"),
+                                           id: this.attr("id")}
+                           })
+        } else {
+          new Ajax.Request('/systems/' + this.attr("id"),
+                           { method: 'put',
+                             parameters: { 'system[x]': this.attr("cx"),
+                                           'system[y]': this.attr("cy"),
+                                           id:this.attr("id")}	
+                           })
+        }
+      },
+
+
+  r = Raphael("paper", 1200, 1200),
+  bord = r.rect(0, 0, 1200, 1200).attr("stroke-width", "3"),
+  connections = [],
+  shapes = [],
+  texte = [];
+
+
+  <% @systems.each do |system| %>
+    var ShowSys = function() { window.open('systems/' + id) },
+        x = <%= system.x %>
+        y = <%= system.y %>
+        id = <%= system.id %>
+        couleur = "<%= system.color %>"
+        nom = "<%= system.name %>"
+
+    switch("<%= system.form %>") {
+      case "log":
+        shapes.push(
+          r.rect(x, y, '<%= system.length %>', <%= system.width %>, 2)
+            .attr({ id: id, fill: couleur, cursor: "move"})
+            .toBack()
+            .dblclick(ShowSys)
+        );
+        texte.push(r.text(x + 25, y + 10, nom));
+      break;
+      case "srv":
+        shapes.push(
+          r.rect(x, y, 30, 30, 2)
+            .attr({ id: id, fill: couleur, cursor: "move"})
+            .dblclick(ShowSys)
+        );
+        texte.push(r.text(x + 15, y + 38, nom));
+      break;
+      case "net":
+        shapes.push(
+          r.circle(x, y, 15)
+            .attr({ id: id, fill: couleur, cursor: "move"})
+            .dblclick(ShowSys)
+        );
+        texte.push(r.text(x , y + 22, nom));
+      break;
+      default : 
+        shapes.push( 
+          r.circle(x, y, 15)
+            .attr({ id: id, fill: couleur, cursor: "move" })
+            .dblclick(ShowSys)
+        );
+        texte.push(r.text(x, y + 22, nom));
+      }
+  <% end %>
+
+
+  for ( var i = 0, ii = shapes.length; i < ii; i++ ) { shapes[i].drag(move, dragger, up) }
+
+
+  <% @links.each do |link| %>
+    switch("<%= link.predicate %>") {
+    case "contient":
+    break;
+    default:
+      connections.push(r.connection(shapes[<%= link.linker %>], shapes[<%= link.linked %>], "#000"));
+    }
+  <% end %>
+
+};
+
+</script>
+
+<div id="paper"></div>

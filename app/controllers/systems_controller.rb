@@ -3,7 +3,7 @@ class SystemsController < ApplicationController
   # GET /systems.xml
   def index
     @systems = System.all
-
+    @links = Link.all    
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @systems }
@@ -14,6 +14,9 @@ class SystemsController < ApplicationController
   # GET /systems/1.xml
   def show
     @system = System.find(params[:id])
+    @systems = System.all
+    @links = Link.all
+
 
     respond_to do |format|
       format.html # show.html.erb
