@@ -6,3 +6,20 @@ class SystemTest < ActiveSupport::TestCase
     assert true
   end
 end
+
+# == Schema Information
+#
+# Table name: systems
+#
+#  id         :integer         not null, primary key
+#  name       :string(255)
+#  form       :string(255)
+#  x          :integer
+#  y          :integer
+#  length     :integer
+#  width      :integer
+#  color      :string(255)
+#  created_at :datetime
+#  updated_at :datetime
+#
+

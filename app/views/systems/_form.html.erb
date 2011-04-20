@@ -1,4 +1,4 @@
-<%= form_for(@system) do |f| %>
+<%= form_for(@system, :name => form) do |f| %>
   <% if @system.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@system.errors.count, "error") %> prohibited this system from being saved:</h2>
@@ -17,7 +17,7 @@
   </div>
   <div class="field">
     <%= f.label :form %><br />
-    <%= f.text_field :form %>
+    <%= f.select :form, ["srv","net","log"] %>
   </div>
   <div class="field">
     <%= f.label :x %><br />
@@ -43,3 +43,45 @@
     <%= f.submit %>
   </div>
 <% end %>
+
+
+<script type="text/javascript">
+bloc = true;
+function hexa(couleur)
+{
+	if(bloc)
+		document.form.hexval.value = couleur;
+        system[color] = couleur;
+}
+function palette() { 
+document.write("<TABLE border='0' cellpadding='0' cellspacing='0' ><TR>"); 
+var h=new Array('00','33','66','99','CC','FF'); 
+var col=""; 
+for(var i=0;i<6;i++) { 
+for(var j=0;j<6;j++) { 
+for(var k=0;k<6;k++) { 
+col="#"+h[i]+h[j]+h[k]; 
+document.write("<TD width='10' height='10' bgcolor='"+col+"' onMouseOver=\"hexa('"+col+"')\" onClick=\"if(bloc) { bloc = false; } else { bloc = true; }\"></TD>"); 
+} 
+} 
+document.write("</tr>"); 
+} 
+document.write("</TABLE>"); 
+} 
+
+
+palette(); 
+document.write("<form name=\"form\"><input type=\"text\" name=\"hexval\"></form>"); 
+
+</SCRIPT>
+
+
+
+
+
+
+
+
+
+
+

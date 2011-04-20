@@ -2,6 +2,7 @@
 
 <table>
   <tr>
+    <th>ID</th>
     <th>Name</th>
     <th>Form</th>
     <th>X</th>
@@ -16,6 +17,7 @@
 
 <% @systems.each do |system| %>
   <tr>
+    <td><%= system.id %></td>
     <td><%= system.name %></td>
     <td><%= system.form %></td>
     <td><%= system.x %></td>
@@ -45,6 +47,7 @@ window.onload = function () {
     oxs = [];
     oys = [];
     for(i = 0; i < shapes.length; i++) {
+ 
       oxs.push(texte[i].attr('x'));
       oys.push(texte[i].attr('y'));
     }
@@ -54,9 +57,11 @@ window.onload = function () {
         var att = this.type == "rect" ? { x: this.ox + dx, y: this.oy + dy } : { cx: this.ox + dx, cy: this.oy + dy };
         this.attr(att);
         for(i = 0; i < shapes.length; i++ ) {
-          if(i == (this.attr("id") - 1)) {
+
+          if((shapes[i].attr("name")) == (this.attr("name"))) {
             texte[i].attr({ x: oxs[i] + dx, y: oys[i] + dy });
           }
+
         }
         for (var i = connections.length; i--; ) { r.connection(connections[i]) }
       },
@@ -99,7 +104,7 @@ window.onload = function () {
       case "log":
         shapes.push(
           r.rect(x, y, '<%= system.length %>', <%= system.width %>, 2)
-            .attr({ id: id, fill: couleur, cursor: "move"})
+            .attr({ id: id, fill: couleur, cursor: "move", "name":nom })
             .toBack()
             .dblclick(ShowSys)
         );
@@ -108,7 +113,7 @@ window.onload = function () {
       case "srv":
         shapes.push(
           r.rect(x, y, 30, 30, 2)
-            .attr({ id: id, fill: couleur, cursor: "move"})
+            .attr({ id: id, fill: couleur, cursor: "move", "name":nom })
             .dblclick(ShowSys)
         );
         texte.push(r.text(x + 15, y + 38, nom));
@@ -116,7 +121,7 @@ window.onload = function () {
       case "net":
         shapes.push(
           r.circle(x, y, 15)
-            .attr({ id: id, fill: couleur, cursor: "move"})
+            .attr({ id: id, fill: couleur, cursor: "move", "name":nom })
             .dblclick(ShowSys)
         );
         texte.push(r.text(x , y + 22, nom));
@@ -124,7 +129,7 @@ window.onload = function () {
       default : 
         shapes.push( 
           r.circle(x, y, 15)
-            .attr({ id: id, fill: couleur, cursor: "move" })
+            .attr({ id: id, fill: couleur, cursor: "move", "name":nom })
             .dblclick(ShowSys)
         );
         texte.push(r.text(x, y + 22, nom));
